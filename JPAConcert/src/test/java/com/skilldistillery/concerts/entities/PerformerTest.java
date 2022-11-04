@@ -40,9 +40,16 @@ class PerformerTest {
 	}
 
 	@Test
-	void test_Venue_basic_mapping() {
+	void test_Performer_basic_mapping() {
 		assertNotNull(performer);
 		assertEquals("Deadmau5", performer.getName());
+	}
+	
+	@Test
+	void test_Performer_Many_To_Many_Concert_association() {
+		assertNotNull(performer);
+		assertNotNull(performer.getConcerts());
+		assertTrue(performer.getConcerts().size() > 0);
 	}
 
 }
