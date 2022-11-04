@@ -6,6 +6,7 @@
     
     <!-- entities  -->
     <class>com.skilldistillery.concerts.entities.Concert</class>
+    <class>com.skilldistillery.concerts.entities.Performer</class>
     <class>com.skilldistillery.concerts.entities.Venue</class>
     <!-- end entities  -->
     
