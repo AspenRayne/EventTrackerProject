@@ -1,6 +1,7 @@
 package com.skilldistillery.concerts.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -32,6 +35,10 @@ public class Concert {
 	@ManyToOne
 	@JoinColumn(name="venue_id")
 	private Venue venue;
+	
+	@ManyToMany
+	@JoinTable(name="concert_has_performer", joinColumns = @JoinColumn(name="concert_id"), inverseJoinColumns = @JoinColumn(name="performer_id"))
+	private List<Performer> performers;
 
 	public Concert() {
 		super();
@@ -83,6 +90,14 @@ public class Concert {
 
 	public void setVenue(Venue venue) {
 		this.venue = venue;
+	}
+
+	public List<Performer> getPerformers() {
+		return performers;
+	}
+
+	public void setPerformers(List<Performer> performers) {
+		this.performers = performers;
 	}
 
 	@Override
