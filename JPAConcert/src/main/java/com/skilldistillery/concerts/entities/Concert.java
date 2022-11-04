@@ -1,7 +1,9 @@
 package com.skilldistillery.concerts.entities;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,11 +16,19 @@ public class Concert {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private String name;
+	private String title;
 
-	private String location;
+	@Column(name="ticket_url")
+	private String ticketUrl;
+	
+	@Column(name="concert_date")
+	private LocalDateTime concertDate;
+	
+	@Column(name="seat_geek_id")
+	private Integer seatGeekId;
 
 	public Concert() {
+		super();
 	}
 
 	public int getId() {
@@ -29,20 +39,36 @@ public class Concert {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getTicketUrl() {
+		return ticketUrl;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setTicketUrl(String ticketUrl) {
+		this.ticketUrl = ticketUrl;
+	}
+
+	public LocalDateTime getConcertDate() {
+		return concertDate;
+	}
+
+	public void setConcertDate(LocalDateTime concertDate) {
+		this.concertDate = concertDate;
+	}
+
+	public Integer getSeatGeekId() {
+		return seatGeekId;
+	}
+
+	public void setSeatGeekId(Integer seatGeekId) {
+		this.seatGeekId = seatGeekId;
 	}
 
 	@Override
@@ -64,7 +90,9 @@ public class Concert {
 
 	@Override
 	public String toString() {
-		return "Event [id=" + id + ", name=" + name + ", location=" + location + "]";
+		return "Concert [id=" + id + ", title=" + title + ", ticket_url=" + ticketUrl + ", concertDate=" + concertDate
+				+ ", seatGeekId=" + seatGeekId + "]";
 	}
-
+	
+	
 }

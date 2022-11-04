@@ -43,7 +43,7 @@ class ConcertTest {
 	@Test
 	void test_Event_basic_mapping() {
 		assertNotNull(event);
-		assertEquals("DeadMau5", event.getName());
+		assertEquals(2022, event.getConcertDate().getYear());
 	}
 
 }
