@@ -2,6 +2,7 @@ package com.skilldistillery.concerts.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -44,5 +45,11 @@ public class VenueTest {
 	void test_Venue_basic_mapping() {
 		assertNotNull(venue);
 		assertEquals("Morrison", venue.getCity());
+	}
+	
+	@Test
+	void test_Venue_One_To_Many_Concert_association() {
+		assertNotNull(venue);
+		assertTrue(venue.getConcerts().size() > 0);
 	}
 }
