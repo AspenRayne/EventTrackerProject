@@ -1,5 +1,6 @@
 package com.skilldistillery.concerts.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Venue {
@@ -30,6 +32,9 @@ public class Venue {
 	
 	@Column(name="ticket_url")
 	private String ticketUrl;
+	
+	@OneToMany(mappedBy="venue")
+	private List<Concert> concerts;
 
 	public Venue() {
 		super();
@@ -97,6 +102,14 @@ public class Venue {
 
 	public void setTicketUrl(String ticketUrl) {
 		this.ticketUrl = ticketUrl;
+	}
+
+	public List<Concert> getConcerts() {
+		return concerts;
+	}
+
+	public void setConcerts(List<Concert> concerts) {
+		this.concerts = concerts;
 	}
 
 	@Override

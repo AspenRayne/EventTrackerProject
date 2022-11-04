@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class ConcertTest {
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Concert event;
+	private Concert concert;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -31,19 +31,25 @@ class ConcertTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		event = em.find(Concert.class, 1);
+		concert = em.find(Concert.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		event = null;
+		concert = null;
 	}
 
 	@Test
-	void test_Event_basic_mapping() {
-		assertNotNull(event);
-		assertEquals(2022, event.getConcertDate().getYear());
+	void test_Concert_basic_mapping() {
+		assertNotNull(concert);
+		assertEquals(2022, concert.getConcertDate().getYear());
+	}
+	
+	@Test
+	void test_Concert_Many_To_One_Venue_association() {
+		assertNotNull(concert);
+		assertEquals("Red Rocks", concert.getVenue().getName());
 	}
 
 }

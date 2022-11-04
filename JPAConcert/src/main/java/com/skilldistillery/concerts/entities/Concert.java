@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Concert {
@@ -26,6 +28,10 @@ public class Concert {
 	
 	@Column(name="seat_geek_id")
 	private Integer seatGeekId;
+	
+	@ManyToOne
+	@JoinColumn(name="venue_id")
+	private Venue venue;
 
 	public Concert() {
 		super();
@@ -69,6 +75,14 @@ public class Concert {
 
 	public void setSeatGeekId(Integer seatGeekId) {
 		this.seatGeekId = seatGeekId;
+	}
+
+	public Venue getVenue() {
+		return venue;
+	}
+
+	public void setVenue(Venue venue) {
+		this.venue = venue;
 	}
 
 	@Override
