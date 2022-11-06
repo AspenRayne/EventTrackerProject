@@ -1,6 +1,7 @@
 package com.skilldistillery.concerts.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,12 @@ public class ConcertServiceImpl implements ConcertService {
 
 	@Override
 	public Concert showConcert(int concertId) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Concert> concertOpt = concertRepo.findById(concertId);
+		Concert concert = null;
+		if (concertOpt.isPresent()) {
+			concert = concertOpt.get();
+		}
+		return concert;
 	}
 
 	@Override

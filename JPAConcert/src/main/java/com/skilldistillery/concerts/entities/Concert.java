@@ -14,6 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Concert {
 
@@ -32,10 +35,12 @@ public class Concert {
 	@Column(name="seat_geek_id")
 	private Integer seatGeekId;
 	
+	@JsonIgnoreProperties(value= {"concerts"})
 	@ManyToOne
 	@JoinColumn(name="venue_id")
 	private Venue venue;
 	
+	@JsonIgnoreProperties(value= {"concerts"})
 	@ManyToMany
 	@JoinTable(name="concert_has_performer", joinColumns = @JoinColumn(name="concert_id"), inverseJoinColumns = @JoinColumn(name="performer_id"))
 	private List<Performer> performers;
