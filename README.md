@@ -64,9 +64,9 @@ I handled many issues, for example:
 
 #### types : "state" (Abbreviation), "city", "performer"
 
+`/api/searchSG/concerts`
 
 ```
-/api/searchSG/concerts
 [
     {
         "type": "state",
