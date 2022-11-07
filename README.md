@@ -65,7 +65,8 @@ I handled many issues, for example:
 #### types : "state" (Abbreviation), "city", "performer"
 
 
-`/api/searchSG/concerts
+```
+/api/searchSG/concerts
 [
     {
         "type": "state",
@@ -79,7 +80,8 @@ I handled many issues, for example:
         "type": "performer",
         "query": "Flume"
     }
-]`
+]
+```
 
 
 ### List Concerts (GET)
