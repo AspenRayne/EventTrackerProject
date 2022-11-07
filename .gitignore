@@ -10,4 +10,4 @@ default
 *.war
 *.bak
 
-*/ApiService.java
+ApiService.java
