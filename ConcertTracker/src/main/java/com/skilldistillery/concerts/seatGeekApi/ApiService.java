@@ -28,7 +28,7 @@ import utils.Utils;
 
 @Service
 public class ApiService {
-	private static final String apiKey = "MzAxMjgwMzd8MTY2NzU4Nzc2OS4xNDM0NzY3";
+	private static final String apiKey = "ApiKeyHere";
 	private static final String baseUrl = "https://api.seatgeek.com/2/events";
 	@Autowired
 	private VenueRepository venueRepo;
