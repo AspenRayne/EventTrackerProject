@@ -64,7 +64,7 @@ I handled many issues, for example:
 
 #### types : "state" (Abbreviation), "city", "performer"
 
-`/api/searchSG/concerts`
+`http://52.40.152.6:8080/ConcertTracker/api/searchSG/concerts`
 
 ```
 [
@@ -86,26 +86,26 @@ I handled many issues, for example:
 
 ### List Concerts (GET)
 
-`/api/concerts`
+`http://52.40.152.6:8080/ConcertTracker/api/concerts`
 
 
 ### View Saved Concert by ID (GET)
 
-`/api/concerts/{concertId}`
+`http://52.40.152.6:8080/ConcertTracker/api/concerts/{concertId}`
 
 
 ### Create Concert by SeatGeek ID (POST)
 
 #### This ID is found from the "Search Concerts" Endpoint
 
-`/api/concerts/{seatGeekId}`
+`http://52.40.152.6:8080/ConcertTracker/api/concerts/{seatGeekId}`
 
 
 ### Update Concert by ID (PUT)
 
-`/api/concerts/{concertId}`
+`http://52.40.152.6:8080/ConcertTracker/api/concerts/{concertId}`
 
 
 ### Delete Concert by ID (DEL)
 
-`/api/concerts/{concertId}`
+`http://52.40.152.6:8080/ConcertTracker/api/concerts/{concertId}`
