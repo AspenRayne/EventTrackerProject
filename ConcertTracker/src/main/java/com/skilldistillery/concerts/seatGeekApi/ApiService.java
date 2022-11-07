@@ -152,7 +152,7 @@ public class ApiService {
 
 			url += urlAddition + "&";
 		}
-		url += "client_id=" + apiKey;
+		url += "type=concert&client_id=" + apiKey;
 		return url;
 	}
 
