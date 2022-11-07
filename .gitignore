@@ -9,5 +9,3 @@ default
 .gradle
 *.war
 *.bak
-
-ApiService.java
