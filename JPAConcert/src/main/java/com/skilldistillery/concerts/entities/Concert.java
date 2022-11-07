@@ -1,6 +1,7 @@
 package com.skilldistillery.concerts.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -34,6 +34,8 @@ public class Concert {
 	
 	@Column(name="seat_geek_id")
 	private Long seatGeekId;
+	
+	private String review;
 	
 	@JsonIgnoreProperties(value= {"concerts"})
 	@ManyToOne
@@ -89,6 +91,14 @@ public class Concert {
 		this.seatGeekId = seatGeekId;
 	}
 
+	public String getReview() {
+		return review;
+	}
+
+	public void setReview(String review) {
+		this.review = review;
+	}
+
 	public Venue getVenue() {
 		return venue;
 	}
@@ -105,6 +115,23 @@ public class Concert {
 		this.performers = performers;
 	}
 
+	public void addPerformer(Performer performer) {
+		if (performers == null)
+			performers = new ArrayList<>();
+
+		if (!performers.contains(performer)) {
+			performers.add(performer);
+			performer.addConcert(this);
+		}
+	}
+
+	public void removePerformer(Performer performer) {
+		if (performers != null && performers.contains(performer)) {
+			performers.remove(performer);
+			performer.removeConcert(this);
+		}
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -124,8 +151,8 @@ public class Concert {
 
 	@Override
 	public String toString() {
-		return "Concert [id=" + id + ", title=" + title + ", ticket_url=" + ticketUrl + ", concertDate=" + concertDate
-				+ ", seatGeekId=" + seatGeekId + "]";
+		return "Concert [id=" + id + ", title=" + title + ", ticketUrl=" + ticketUrl + ", concertDate=" + concertDate
+				+ ", seatGeekId=" + seatGeekId + ", review=" + review + "]";
 	}
 	
 	

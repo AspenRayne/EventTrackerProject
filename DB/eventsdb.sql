@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS `venue` (
   `city` VARCHAR(100) NULL,
   `name` VARCHAR(100) NOT NULL,
   `country` VARCHAR(100) NULL,
-  `state` VARCHAR(100) NULL,
+  `state` VARCHAR(2) NULL,
   `postal_code` VARCHAR(10) NULL,
-  `ticket_url` VARCHAR(45) NULL,
+  `ticket_url` VARCHAR(2000) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `concert` (
   `concert_date` DATETIME NOT NULL,
   `seat_geek_id` INT NULL,
   `venue_id` INT NOT NULL,
+  `review` VARCHAR(2000) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_concert_venue1_idx` (`venue_id` ASC),
   CONSTRAINT `fk_concert_venue1`
@@ -64,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `performer` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `seat_geek_id` INT NULL,
   `name` VARCHAR(100) NOT NULL,
-  `image_url` VARCHAR(1) NULL,
+  `image_url` VARCHAR(2000) NULL,
   `type` VARCHAR(45) NULL,
   `genre` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
@@ -120,7 +121,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `eventsdb`;
-INSERT INTO `concert` (`id`, `title`, `ticket_url`, `concert_date`, `seat_geek_id`, `venue_id`) VALUES (1, NULL, NULL, '2022-11-04 6:00:00', NULL, 1);
+INSERT INTO `concert` (`id`, `title`, `ticket_url`, `concert_date`, `seat_geek_id`, `venue_id`, `review`) VALUES (1, NULL, NULL, '2022-11-04 6:00:00', NULL, 1, NULL);
 
 COMMIT;
 

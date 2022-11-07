@@ -1,5 +1,6 @@
 package com.skilldistillery.concerts.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -91,6 +92,23 @@ public class Performer {
 		this.concerts = concerts;
 	}
 
+	public void addConcert(Concert concert) {
+		if (concerts == null)
+			concerts = new ArrayList<>();
+
+		if (!concerts.add(concert)) {
+			concerts.add(concert);
+			concert.addPerformer(this);
+		}
+	}
+
+	public void removeConcert(Concert concert) {
+		if (concerts != null && concerts.contains(concert)) {
+			concerts.remove(concert);
+			concert.removePerformer(this);
+		}
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
