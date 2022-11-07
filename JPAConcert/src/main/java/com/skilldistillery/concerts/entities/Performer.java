@@ -17,7 +17,7 @@ public class Performer {
 	private int id;
 	
 	@Column(name="seat_geek_id")
-	private Integer seatGeekId;
+	private Long seatGeekId;
 	
 	private String name;
 	
@@ -43,11 +43,11 @@ public class Performer {
 		this.id = id;
 	}
 
-	public Integer getSeatGeekId() {
+	public Long getSeatGeekId() {
 		return seatGeekId;
 	}
 
-	public void setSeatGeekId(Integer seatGeekId) {
+	public void setSeatGeekId(Long seatGeekId) {
 		this.seatGeekId = seatGeekId;
 	}
 

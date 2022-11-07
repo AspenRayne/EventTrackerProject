@@ -1,5 +1,6 @@
 package com.skilldistillery.concerts.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +18,7 @@ public class Venue {
 	private int id;
 	
 	@Column(name="seat_geek_id")
-	private Integer seatGeekId;
+	private Long seatGeekId;
 	
 	private String city;
 	
@@ -48,11 +49,11 @@ public class Venue {
 		this.id = id;
 	}
 
-	public Integer getSeatGeekId() {
+	public Long getSeatGeekId() {
 		return seatGeekId;
 	}
 
-	public void setSeatGeekId(Integer seatGeekId) {
+	public void setSeatGeekId(Long seatGeekId) {
 		this.seatGeekId = seatGeekId;
 	}
 
@@ -107,11 +108,30 @@ public class Venue {
 	public List<Concert> getConcerts() {
 		return concerts;
 	}
-
+	
 	public void setConcerts(List<Concert> concerts) {
 		this.concerts = concerts;
 	}
+	
+	public void addConcert(Concert concert) {
+		if (concerts == null)
+			concerts = new ArrayList<>();
 
+		if (!concerts.contains(concert)) {
+			concerts.add(concert);
+			if (concert.getVenue() != null) {
+				concert.getVenue().getConcerts().remove(concert);
+			}
+			concert.setVenue(this);
+		}
+	}
+
+	public void removeConcert(Concert concert) {
+		concert.setVenue(null);
+		if (concerts != null) {
+			concerts.remove(concert);
+		}
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

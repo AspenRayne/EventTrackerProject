@@ -33,7 +33,7 @@ public class Concert {
 	private LocalDateTime concertDate;
 	
 	@Column(name="seat_geek_id")
-	private Integer seatGeekId;
+	private Long seatGeekId;
 	
 	@JsonIgnoreProperties(value= {"concerts"})
 	@ManyToOne
@@ -81,11 +81,11 @@ public class Concert {
 		this.concertDate = concertDate;
 	}
 
-	public Integer getSeatGeekId() {
+	public Long getSeatGeekId() {
 		return seatGeekId;
 	}
 
-	public void setSeatGeekId(Integer seatGeekId) {
+	public void setSeatGeekId(Long seatGeekId) {
 		this.seatGeekId = seatGeekId;
 	}
 
