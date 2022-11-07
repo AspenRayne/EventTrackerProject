@@ -47,7 +47,7 @@ public class ConcertController {
 		String jsonData = null;
 		Concert concert = null;
 		try {
-			concert = apiService.getConcerts("id", sgId).get(0);
+			concert = apiService.getConcertById(sgId);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

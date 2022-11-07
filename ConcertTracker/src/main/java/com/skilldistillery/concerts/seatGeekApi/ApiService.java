@@ -28,26 +28,19 @@ import utils.Utils;
 @Service
 public class ApiService {
 	private static final String apiKey = "MzAxMjgwMzd8MTY2NzU4Nzc2OS4xNDM0NzY3";
-
+	private static final String baseUrl = "https://api.seatgeek.com/2/events";
 	@Autowired
 	private VenueRepository venueRepo;
 
 	@Autowired
 	private PerformerRepository performerRepo;
 
-	public List<Concert> getConcerts(String searchType, String searchQuery) throws MalformedURLException, IOException {
-		String url = null;
-		if (searchType.equals("performer")) {
-			url = this.performerQuery(searchQuery);
-		} else if (searchType.equals("city") || searchType.equals("state")) {
-			url = this.venueQuery(searchQuery, searchType);
-
-		} else if (searchType.equals("id")) {
-			url = this.idQuery(searchQuery);
-		} else {
+	public List<Concert> getConcerts(JSONArray searchArray) throws MalformedURLException, IOException {
+		String url = this.queryBuilder(searchArray);
+		if (url == null) {
 			return null;
 		}
-
+		
 		InputStream in = new URL(url).openStream();
 		String json = IOUtils.toString(in, "UTF-8");
 		Object response = JSONValue.parse(json);
@@ -69,11 +62,23 @@ public class ApiService {
 		}
 		return concerts;
 	}
+	
+	public Concert getConcertById(String sgId) throws IOException {
+		String url = this.idQuery(sgId);
+		InputStream in = new URL(url).openStream();
+		String json = IOUtils.toString(in, "UTF-8");
+		Object response = JSONValue.parse(json);
+		Concert concert = null;
+		if (response instanceof JSONObject) {
+			JSONObject jsonResponse = (JSONObject) response;
+			concert = unpackData(jsonResponse.toString());
+		}
+		return concert;
+	}
 
 
 	private Concert unpackData(String jsonString) {
 		JSONObject obj = (JSONObject) JSONValue.parse(jsonString);
-		System.out.println(obj.toJSONString());
 		Concert concert = new Concert();
 		if(obj.get("title") != null) {
 			concert.setTitle(obj.get("title").toString());
@@ -127,9 +132,32 @@ public class ApiService {
 		return concert;
 	}
 
+	public String queryBuilder(JSONArray searchArray) {
+		String url = baseUrl + "?";
+		for(Object query : searchArray) {
+			JSONObject queryObj = (JSONObject) query;
+			String searchType = queryObj.get("type").toString();
+			String searchQuery = queryObj.get("query").toString();
+			String urlAddition = null;
+			
+			if (searchType.equals("performer")) {
+				urlAddition = this.performerQuery(searchQuery);
+			} else if (searchType.equals("city") || searchType.equals("state")) {
+				urlAddition = this.venueQuery(searchQuery, searchType);	
+			}
+			
+			if (urlAddition == null){
+				return null;
+			}
+			
+			url += urlAddition + "&";
+		}
+		url += "client_id=" + apiKey;
+		return url;
+	}
 	public String performerQuery(String searchQuery) {
 		searchQuery = Utils.slugify(searchQuery);
-		String url = "https://api.seatgeek.com/2/events?performers.slug=" + searchQuery + "&client_id=" + apiKey;
+		String url = "performers.slug=" + searchQuery;
 		return url;
 	}
 
@@ -138,9 +166,9 @@ public class ApiService {
 			searchQuery = URLEncoder.encode(searchQuery, StandardCharsets.UTF_8.toString());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
+			return null;
 		}
-		String url = "https://api.seatgeek.com/2/events?venue." + searchType + "=" + searchQuery + "&client_id="
-				+ apiKey;
+		String url = "venue." + searchType + "=" + searchQuery;
 		return url;
 	}
 
