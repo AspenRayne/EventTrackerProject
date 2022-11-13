@@ -41,6 +41,7 @@ public class ApiService {
 
 	public List<Concert> getConcerts(JSONArray searchArray) throws MalformedURLException, IOException {
 		String url = this.queryBuilder(searchArray);
+		System.out.println(url);
 		if (url == null) {
 			return null;
 		}

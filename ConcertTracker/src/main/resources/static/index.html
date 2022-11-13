@@ -14,20 +14,23 @@
 </head>
 <body>
 
-	<h1>Welcome to Concert Tracker</h1>
+	<h1 class="container text-center">Welcome to Concert Tracker</h1>
+	<div class="container text-center">
+	<button id="savedConcerts" class="btn btn-primary">View Saved Concerts</button>
+	</div> <br>
 
-
-	<form name="searchSG">
+	<form name="searchSG"  class="container text-center">
 		<input type="text" name="city" placeholder="City"><br> <input
 			type="text" name="state" placeholder="State Abbreviation"><br>
 		<input type="text" name="performer" placeholder="Performer"><br>
 		<br>
 		<button name="search" class="btn btn-primary">Search</button>
-	</form>
+	</form> <br>
 
-	<div id="concertListDiv">
+	<div id="performerListDiv" class="container text-center">
 	</div>
-	<div id="performerListDiv"></div>
+	<div id="concertListDiv" class="container text-center">
+	</div>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

@@ -6,7 +6,8 @@ window.addEventListener('load', function() {
 function init() {
 	//TODO: setup event listener
 	//TODO: load inital data.
-	loadConcertList();
+	document.getElementById('savedConcerts').addEventListener('click', loadConcertList);
+
 	searchSG.search.addEventListener('click', submitCallBack)
 };
 
@@ -42,11 +43,14 @@ function displayConcertList(concerts) {
 	//TODO: add concerts to DOM
 	let dataDiv = document.getElementById('concertListDiv');
 	dataDiv.textContent = '';
+	
+	let div = document.getElementById('performerListDiv');
+	div.textContent = "";
 
 	if (concerts && Array.isArray(concerts) && concerts.length > 0) {
 
 		let table = document.createElement('table');
-		table.className = "table table-dark table-hover table-bordered bordered-light";
+		table.className = "table table-primary table-hover table-bordered bordered-light";
 		dataDiv.appendChild(table);
 		let thead = document.createElement('thead');
 		table.appendChild(thead);
@@ -64,14 +68,8 @@ function displayConcertList(concerts) {
 		th = document.createElement('th');
 		th.textContent = "Venue Location";
 		tr.appendChild(th);
-		th = document.createElement('th');
-		th.textContent = "Concert Date";
-		tr.appendChild(th);
-		th = document.createElement('th');
-		th.textContent = "Ticket Url";
-		tr.appendChild(th);
-		concerts.forEach(function(val) {
 
+		concerts.forEach(function(val) {
 			tr = document.createElement('tr');
 			tbody.appendChild(tr);
 			let td = document.createElement('td');
@@ -83,25 +81,14 @@ function displayConcertList(concerts) {
 			td = document.createElement('td');
 			td.textContent = val.venue.city + ", " + val.venue.state + " " + val.venue.country + " " + val.venue.postalCode;
 			tr.appendChild(td);
-			td = document.createElement('td');
-			td.textContent = val.concertDate;
-			tr.appendChild(td);
-			td = document.createElement('td');
-			let a = document.createElement('a');
-			let link = document.createTextNode("Get Tickets");
-			a.appendChild(link);
-			a.href = val.ticketUrl;
-			td.appendChild(a);
-			tr.appendChild(td);
-			
-			tr.addEventListener('click', function(){
-				displayPerformers(val.performers);
-				
-			
+
+			tr.addEventListener('click', function() {
+				displayPerformers(val.performers, val);
 			});
 		});
 	}
 }
+
 
 let submitCallBack = function(e) {
 	e.preventDefault();
@@ -111,39 +98,35 @@ let submitCallBack = function(e) {
 	let state = form.state.value;
 	let performer = form.performer.value;
 
-	let userSearch = [
-		{
-			type: "state",
-			query: state
-		},
-		{
+	let userSearch = [];
+	if (city !== "") {
+		userSearch.push({
 			type: "city",
 			query: city
-		},
-		{
+		});
+	}
+	if (state !== "") {
+		userSearch.push({
+			type: "state",
+			query: state
+		});
+	}
+	if (performer !== "") {
+		userSearch.push({
 			type: "performer",
 			query: performer
-		}
-	];
+		});
+	}
 
 	console.log(userSearch[0]);
 
-	let userObject = [];
-
-	userSearch.forEach(element => {
-		if (element.query !== "") {
-			userObject.push(element);
-			console.log(userObject)
-		}
-		let userObjectJson = JSON.stringify(userObject);
-		console.log(userObjectJson);
-		searchSeatGeek(userObjectJson);
-
-
-	});
-
+	let userObjectJson = JSON.stringify(userSearch);
+	console.log(userObjectJson);
+	searchSeatGeek(userObjectJson);
 
 	form.reset();
+	let div = document.getElementById('performerListDiv');
+	div.textContent = "";
 }
 
 function searchSeatGeek(userSearch) {
@@ -175,7 +158,7 @@ function getPerformers(id) {
 				let performerJson = xhr.responseText;
 				console.log(performerJson); // TESTING
 				let performers = JSON.parse(performerJson);
-				displayPerformers(performers);
+
 			} else if (xhr.status === 404) {
 				displayError('Performers not found');
 			} else {
@@ -187,25 +170,155 @@ function getPerformers(id) {
 	xhr.send();
 }
 
-function displayPerformers(performers) {
-	let performerData = document.getElementById('performerListDiv');
-	performerData.textContent = '';
+function displayPerformers(performers, val) {
+	let dataDiv = document.getElementById('performerListDiv');
+	dataDiv.textContent = '';
+
+	let mainRowDiv = document.createElement('div');
+	mainRowDiv.className = 'row';
+	dataDiv.appendChild(mainRowDiv);
+
+	let mainColDiv = document.createElement('div');
+	mainColDiv.className = 'col';
+	mainRowDiv.appendChild(mainColDiv);
+
+	let mainColDiv2 = document.createElement('div');
+	mainColDiv2.className = 'col';
+	mainRowDiv.appendChild(mainColDiv2);
+
+
 	if (performers && performers.length > 0) {
-		let h3 = document.createElement('h3');
-		h3.textContent = 'Performers'
-		performerData.appendChild(h3);
-		let ul = document.createElement('ul');
-		ul.className = "list-group list-group-flush"
-		performerData.appendChild(ul);
+
 		performers.forEach(function(val) {
-			let li = document.createElement('li');
-			const img = document.createElement('img');
+
+			let cardDiv = document.createElement('div');
+			cardDiv.className = 'card mb-3';
+			cardDiv.style = 'max-width: 600px'
+			mainColDiv.appendChild(cardDiv);
+
+			let rowDiv = document.createElement('div');
+			rowDiv.className = 'row g-0';
+			cardDiv.appendChild(rowDiv);
+
+			let imageDiv = document.createElement('div');
+			imageDiv.className = 'col-md-4';
+			rowDiv.appendChild(imageDiv);
+
+			let img = document.createElement('img');
 			img.src = val.imageUrl;
-			console.log(img.src);
-			li.className = "list-group-item"
-			li.textContent = val.name;
-			li.appendChild(img)
-			ul.appendChild(li);
+			img.className = 'img-fluid rounded-start';
+			imageDiv.appendChild(img);
+
+			let colDiv = document.createElement('div');
+			colDiv.className = 'col-md-8';
+			rowDiv.appendChild(colDiv);
+
+			let bodyDiv = document.createElement('div');
+			bodyDiv.className = 'card-body';
+			colDiv.appendChild(bodyDiv);
+
+			let h5 = document.createElement('h5');
+			h5.className = 'card-title';
+
+			let textNode = document.createTextNode('Perfomer: ' + val.name);
+			h5.appendChild(textNode);
+			bodyDiv.appendChild(h5);
+
+
 		})
+		let ul = document.createElement('ul');
+		ul.className = 'list-group list-group-flush';
+		mainColDiv2.appendChild(ul);
+
+		let li = document.createElement('li');
+		li.className = 'list-group-item';
+		li.textContent = 'Venue: ' + val.venue.name;
+		ul.appendChild(li);
+
+		li = document.createElement('li');
+		li.className = 'list-group-item';
+		li.textContent = 'Venue Location: ' + val.venue.city + ", " + val.venue.state + " " + val.venue.country + " " + val.venue.postalCode;
+		ul.appendChild(li);
+
+		li = document.createElement('li');
+		li.className = 'list-group-item';
+		li.textContent = 'Concert Date: ' + val.concertDate;
+		ul.appendChild(li);
+
+		li = document.createElement('li');
+		li.className = 'list-group-item';
+		let a = document.createElement('a');
+		let link = document.createTextNode("Get Tickets");
+		a.appendChild(link);
+		a.href = val.ticketUrl;
+		li.appendChild(a);
+		ul.appendChild(li);
+
+		li = document.createElement('li');
+		li.className = 'list-group-item';
+
+		if (val.id !== 0) {
+			let button = document.createElement('button');
+			button.className = 'btn btn-danger';
+			let textNode = document.createTextNode('Unsave Concert');
+			button.appendChild(textNode);
+			button.addEventListener('click', function(){
+				removeConcert(val.id)
+				});
+			li.appendChild(button)
+			ul.appendChild(li);
+
+		} if (val.id === 0) {
+			let button = document.createElement('button');
+			button.className = 'btn btn-success';
+			let textNode = document.createTextNode('Save Concert');
+			button.appendChild(textNode);
+			button.addEventListener('click', function(){
+				saveConcert(val.seatGeekId)
+				});
+			li.appendChild(button)
+			ul.appendChild(li);
+			
+		}
 	}
+
 }
+
+
+
+function saveConcert(seatGeekId) {
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', `api/concerts/${seatGeekId}`);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status == 200 || xhr.status == 201) {
+				let data = JSON.parse(xhr.responseText);
+				loadConcertList();
+			}
+			else {
+				displayError('Error creating film: ' + xhr.status + " " + xhr.statusText)
+			}
+		}
+	};
+
+	xhr.send();
+}
+
+function removeConcert(id) {
+	let xhr = new XMLHttpRequest();
+	xhr.open('DELETE', `api/concerts/${id}`);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status == 204 || xhr.status == 200) {
+				loadConcertList();
+			}
+			else {
+				displayError('Error creating film: ' + xhr.status + " " + xhr.statusText)
+			}
+		}
+	};
+
+	xhr.send();
+}
+
+
