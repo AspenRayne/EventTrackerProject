@@ -134,5 +134,14 @@ public class ConcertController {
 			res.setStatus(400);
 		}
 	}
+	
+	@GetMapping("concerts/{id}/performers")
+	public List<Performer> listOfPerformers(@PathVariable Long id, HttpServletResponse res){
+		List<Performer> performers = concertService.listOfPerformers(id);
+		if(performers == null) {
+			res.setStatus(404);
+		}
+		return performers;
+	}
 
 }

@@ -11,12 +11,16 @@ import com.skilldistillery.concerts.entities.Concert;
 import com.skilldistillery.concerts.entities.Performer;
 import com.skilldistillery.concerts.entities.Venue;
 import com.skilldistillery.concerts.repositories.ConcertRepository;
+import com.skilldistillery.concerts.repositories.PerformerRepository;
 
 @Service
 public class ConcertServiceImpl implements ConcertService {
 
 	@Autowired
 	private ConcertRepository concertRepo;
+	
+	@Autowired
+	private PerformerRepository performerRepo;
 	
 	@Override
 	public List<Concert> listAllConcerts() {
@@ -61,6 +65,11 @@ public class ConcertServiceImpl implements ConcertService {
 			concertRepo.deleteById(concertId);
 		}
 		return !concertRepo.existsById(concertId);
+	}
+
+	@Override
+	public List<Performer> listOfPerformers(Long seatGeekId) {
+		return performerRepo.findByConcerts_seatGeekId(seatGeekId);
 	}
 
 }

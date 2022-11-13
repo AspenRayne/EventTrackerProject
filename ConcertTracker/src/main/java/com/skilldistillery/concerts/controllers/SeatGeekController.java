@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +24,7 @@ public class SeatGeekController {
 	@Autowired
 	private ApiService sgService;
 
-	@GetMapping("concerts")
+	@PostMapping("concerts")
 	public List<Concert> getSGConcerts(@RequestBody String searchArray, HttpServletResponse res) throws MalformedURLException, IOException {
 		List<Concert> concerts = null;
 		try{
