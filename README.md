@@ -56,6 +56,8 @@ I handled many issues, for example:
   - Spring Tool Suite
   - SeatGeek API
 
+## Access Front End Website On AWS 
+`http://52.40.152.6:8080/ConcertTracker/`
 
 ## Endpoints
 
@@ -113,4 +115,3 @@ I handled many issues, for example:
 ### EER Diagram
 
 ![image](https://user-images.githubusercontent.com/90653438/200232125-a374eec8-84ac-4b0c-a483-e75c8a2627ed.png)
-
