@@ -43,7 +43,7 @@ function displayConcertList(concerts) {
 	//TODO: add concerts to DOM
 	let dataDiv = document.getElementById('concertListDiv');
 	dataDiv.textContent = '';
-	
+
 	let div = document.getElementById('performerListDiv');
 	div.textContent = "";
 
@@ -156,7 +156,6 @@ function getPerformers(id) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200 || xhr.status === 201) {
 				let performerJson = xhr.responseText;
-				console.log(performerJson); // TESTING
 				let performers = JSON.parse(performerJson);
 
 			} else if (xhr.status === 404) {
@@ -254,36 +253,106 @@ function displayPerformers(performers, val) {
 		li.appendChild(a);
 		ul.appendChild(li);
 
-		li = document.createElement('li');
-		li.className = 'list-group-item';
-
-		if (val.id !== 0) {
+		if (val.review === null && val.id !== 0) {
+			li = document.createElement('li');
+			li.className = 'list-group-item';
+			
+			let form = document.createElement('form');
+			let input = document.createElement('input');
+			input.type = 'text';
+			
+			form.appendChild(input);
+			
+			li.appendChild(form);
+			
 			let button = document.createElement('button');
-			button.className = 'btn btn-danger';
-			let textNode = document.createTextNode('Unsave Concert');
+			button.className = 'btn btn-success';
+			button.name = "addCommment";
+			let textNode = document.createTextNode('Add Comment');
 			button.appendChild(textNode);
 			button.addEventListener('click', function(){
+				saveComment(val, input);
+			});
+			form.appendChild(button);
+			ul.appendChild(li);
+		}
+
+		if (val.review !== null && val.id !== 0) {
+			li = document.createElement('li');
+			li.className = 'list-group-item';
+			
+			let form = document.createElement('form');
+			let input = document.createElement('input');
+			input.type = 'text';
+			input.value = val.review
+			
+			form.appendChild(input);
+			
+			li.appendChild(form);
+			
+			let button = document.createElement('button');
+			button.className = 'btn btn-success';
+			button.name = "addCommment";
+			let textNode = document.createTextNode('Edit Comment');
+			button.appendChild(textNode);
+			button.addEventListener('click', function(){
+				saveComment(val, input);
+			});
+			form.appendChild(button);
+			ul.appendChild(li);
+
+		}
+
+		if (val.id !== 0) {
+			li = document.createElement('li');
+			
+			li.className = 'list-group-item';
+			button = document.createElement('button');
+			button.className = 'btn btn-danger';
+			textNode = document.createTextNode('Unsave Concert');
+			button.appendChild(textNode);
+			button.addEventListener('click', function() {
 				removeConcert(val.id)
-				});
+			});
 			li.appendChild(button)
 			ul.appendChild(li);
 
 		} if (val.id === 0) {
+			li = document.createElement('li');
+			li.className = 'list-group-item';
 			let button = document.createElement('button');
 			button.className = 'btn btn-success';
 			let textNode = document.createTextNode('Save Concert');
 			button.appendChild(textNode);
-			button.addEventListener('click', function(){
+			button.addEventListener('click', function() {
 				saveConcert(val.seatGeekId)
-				});
+			});
 			li.appendChild(button)
 			ul.appendChild(li);
-			
+
 		}
+
 	}
 
 }
 
+let saveComment = function(val, input){
+	val.review = input.value;
+	let xhr = new XMLHttpRequest();
+	xhr.open('PUT', `api/concerts/${val.id}`);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200 || xhr.status === 201) {
+				loadConcertList();
+			} else {
+				//displayError('An error occurred: ' + xhr.status);
+			}
+		}
+	};
+	let concert = JSON.stringify(val);
+	xhr.send(concert);
+}
 
 
 function saveConcert(seatGeekId) {
