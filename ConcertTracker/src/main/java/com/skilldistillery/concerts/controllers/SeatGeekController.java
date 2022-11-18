@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.skilldistillery.concerts.entities.Concert;
 import com.skilldistillery.concerts.seatGeekApi.ApiService;
 
+@CrossOrigin({"*", "http://localhost/"})
 @RestController
 @RequestMapping("api/searchSG")
 public class SeatGeekController {
