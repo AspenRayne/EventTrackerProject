@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Concert } from 'src/app/models/concert';
+import { ConcertService } from 'src/app/services/concert.service';
 import { SeatgeekService } from 'src/app/services/seatgeek.service';
 
 @Component({
@@ -10,13 +11,18 @@ import { SeatgeekService } from 'src/app/services/seatgeek.service';
 export class SearchSeatGeekComponent implements OnInit {
   sgList: Concert[] = [];
 
+  savedButton = false;
+
   searchParams: { [key: string]: any } = {
     city: '',
     state: '',
     performer: '',
   };
 
-  constructor(private sgService: SeatgeekService) {}
+  constructor(
+    private sgService: SeatgeekService,
+    private concertService: ConcertService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -36,8 +42,15 @@ export class SearchSeatGeekComponent implements OnInit {
         concerts.forEach((element) => {
           this.sgList.push(element);
         });
-        console.log(concerts);
       },
     });
+  }
+
+  saveConcert(concert: Concert){
+    this.concertService.create(concert).subscribe({
+      next: (concerts) => {
+        this.savedButton = true;
+      }
+    })
   }
 }
