@@ -17,7 +17,21 @@ export class ConcertService {
       catchError((err: any) => {
         console.log(err);
         return throwError(
-          () => new Error('ConcertService.index(): error retrieving concerts: ' + err)
+          () =>
+            new Error(
+              'ConcertService.index(): error retrieving concerts: ' + err
+            )
+        );
+      })
+    );
+  }
+
+  create(concert: Concert): Observable<Concert> {
+    return this.http.post<Concert>(`${this.url}/${concert.seatGeekId}`, null).pipe(
+      catchError((err: any) => {
+        console.error(err);
+        return throwError(
+          () => new Error('Todo.create(): error creating Todo: ' + err)
         );
       })
     );

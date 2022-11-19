@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Concert } from 'src/app/models/concert';
 import { ConcertService } from 'src/app/services/concert.service';
+import { SeatgeekService } from 'src/app/services/seatgeek.service';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +9,14 @@ import { ConcertService } from 'src/app/services/concert.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-
   concerts: Concert[] = [];
 
-  constructor(private concertService: ConcertService) {}
+
+
+  constructor(
+    private concertService: ConcertService,
+    private sgService: SeatgeekService
+  ) {}
 
   ngOnInit(): void {
     this.loadConcerts();
@@ -29,4 +34,7 @@ export class HomeComponent implements OnInit {
       },
     });
   }
+
+
+
 }

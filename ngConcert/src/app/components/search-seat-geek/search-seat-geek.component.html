@@ -1,0 +1,16 @@
+<form >
+  <input class="form-control" type="text" name="city" placeholder="City" [(ngModel)]="searchParams['city']">
+  <input class="form-control" type="text" name="state" placeholder="State" [(ngModel)]="searchParams['state']">
+  <input class="form-control" type="text" name="performer" placeholder="Performer" [(ngModel)]="searchParams['performer']">
+  <button (click)="searchSG()">Search</button>
+</form>
+
+
+<div *ngIf="sgList">
+  <div *ngFor="let concerts of sgList">
+    {{concerts.title}}
+    {{concerts.ticketUrl}}
+    {{concerts.concertDate}}
+  </div>
+
+</div>
