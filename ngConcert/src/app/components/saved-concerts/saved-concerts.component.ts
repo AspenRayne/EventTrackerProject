@@ -8,7 +8,6 @@ import { ConcertService } from 'src/app/services/concert.service';
   styleUrls: ['./saved-concerts.component.css'],
 })
 export class SavedConcertsComponent implements OnInit {
-  concertComment = '';
 
   concerts: Concert[] = [];
 
@@ -21,22 +20,27 @@ export class SavedConcertsComponent implements OnInit {
   loadConcerts() {
     this.concertService.index().subscribe({
       next: (concerts) => {
-        console.log(concerts);
         this.concerts = concerts;
       },
       error: (fail) => {
-        console.error('HomeComponent.loadConcerts: error getting concerts');
+        console.error(
+          'SavedConcertsComponent.loadConcerts: error getting concerts'
+        );
         console.error(fail);
-      },
+      }
     });
   }
 
   addComment(concert: Concert) {
-    // concert.review = this.concertComment;
-
-    this.concertService.addComment(concert).subscribe({});
-
-    this.concertComment = '';
+    this.concertService.addComment(concert).subscribe({
+      next: (concerts) => {},
+      error: (fail) => {
+        console.error(
+          'SavedConcertsComponent.addComment: error adding comment'
+        );
+        console.error(fail);
+      }
+    });
   }
 
   deleteConcert(id: number) {
@@ -49,7 +53,7 @@ export class SavedConcertsComponent implements OnInit {
           'SavedConcertsComponent.deleteConcert(): error deleting todo:'
         );
         console.error(problem);
-      },
+      }
     });
   }
 }

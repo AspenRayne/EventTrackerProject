@@ -41,6 +41,12 @@ export class SearchSeatGeekComponent implements OnInit {
           this.sgList.push(element);
         });
       },
+      error: (fail) => {
+        console.error(
+          'SearchSeatGeekComponent.searchSG: error searching concert'
+        );
+        console.error(fail);
+      }
     });
     this.sgList = [];
     this.searchParams = this.resetForm();
@@ -59,6 +65,12 @@ export class SearchSeatGeekComponent implements OnInit {
       next: (concerts) => {
         this.router.navigateByUrl('/concerts')
       },
+      error: (fail) => {
+        console.error(
+          'SearchSeatGeekComponent.saveConcert: error saving concert'
+        );
+        console.error(fail);
+      }
     });
   }
 }

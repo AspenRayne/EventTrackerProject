@@ -9,21 +9,10 @@ import { SeatgeekService } from 'src/app/services/seatgeek.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-
-
-
-
   constructor(
     private concertService: ConcertService,
     private sgService: SeatgeekService
   ) {}
 
-  ngOnInit(): void {
-
-  }
-
-
-
-
-
+  ngOnInit(): void {}
 }
