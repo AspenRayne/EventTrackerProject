@@ -1,33 +1,33 @@
-<div id="bannerimage" name="bannerimage">
-  <h1>Search By Any Combination</h1>
-  <div id="searchForm">
-    <form>
-      <input
-        class="form-control"
-        type="text"
-        name="city"
-        placeholder="City"
-        [(ngModel)]="searchParams['city']"
-      />
-      <input
-        class="form-control"
-        type="text"
-        name="state"
-        placeholder="State"
-        [(ngModel)]="searchParams['state']"
-      />
-      <input
-        class="form-control"
-        type="text"
-        name="performer"
-        placeholder="Performer"
-        [(ngModel)]="searchParams['performer']"
-      />
-      <hr />
-      <button class="btn btn-light" (click)="searchSG()">Search</button>
-    </form>
-  </div>
+<!-- <div id="bannerimage"> -->
+<h3 id="searchH3" class="text-center">Search</h3>
+<div id="searchForm">
+  <form>
+    <input
+      class="form-control"
+      type="text"
+      name="city"
+      placeholder="City"
+      [(ngModel)]="searchParams['city']"
+    />
+    <input
+      class="form-control"
+      type="text"
+      name="state"
+      placeholder="State"
+      [(ngModel)]="searchParams['state']"
+    />
+    <input
+      class="form-control"
+      type="text"
+      name="performer"
+      placeholder="Performer"
+      [(ngModel)]="searchParams['performer']"
+    />
+    <hr />
+    <button class="btn btn-dark" (click)="searchSG()">Search</button>
+  </form>
 </div>
+<!-- </div> -->
 <hr />
 <div *ngIf="sgList" id="concertsList">
   <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -69,13 +69,30 @@
               </p>
             </div>
             <div class="card-footer">
-              <small class="text-muted"
-                ><a href="{{ concert.ticketUrl }}">Tickets</a></small
-              >
-              |
-              <button (click)="saveConcert(concert)" class="btn btn-primary">
-                Save Concert
-              </button>
+              <div *ngIf="concert.id === 0">
+                <a
+                  class="btn btn-primary"
+                  href="{{ concert.ticketUrl }}"
+                  role="button"
+                  style="margin-right: 10px;"
+                  >Tickets</a
+                >
+                <button (click)="saveConcert(concert)" class="btn btn-primary">
+                  Save Concert
+                </button>
+              </div>
+              <div *ngIf="concert.id > 0">
+                <h3>
+                  <a
+                    class="btn btn-primary"
+                    href="{{ concert.ticketUrl }}"
+                    role="button"
+                    style="margin-right: 10px;"
+                    >Tickets</a
+                  >
+                  <span class="badge bg-success">Saved</span>
+                </h3>
+              </div>
             </div>
           </div>
         </div>

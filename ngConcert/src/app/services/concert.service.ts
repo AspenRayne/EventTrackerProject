@@ -57,7 +57,7 @@ export class ConcertService {
       catchError((err: any) => {
         console.error(err);
         return throwError(
-          () => new Error('Todo.destroy(): error deleting Todo: ' + err)
+          () => new Error('Concert.destroy(): error deleting Concert: ' + err)
         );
       })
     );

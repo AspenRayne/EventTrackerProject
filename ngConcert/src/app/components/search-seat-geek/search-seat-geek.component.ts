@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Concert } from 'src/app/models/concert';
 import { Performer } from 'src/app/models/performer';
 import { ConcertService } from 'src/app/services/concert.service';
 import { PerformerService } from 'src/app/services/performer.service';
 import { SeatgeekService } from 'src/app/services/seatgeek.service';
+import { SavedConcertsComponent } from '../saved-concerts/saved-concerts.component';
 
 @Component({
   selector: 'app-search-seat-geek',
@@ -13,13 +15,12 @@ import { SeatgeekService } from 'src/app/services/seatgeek.service';
 export class SearchSeatGeekComponent implements OnInit {
   sgList: Concert[] = [];
 
-  savedButton = false;
-
   searchParams: { [key: string]: any } = this.resetForm();
 
   constructor(
     private sgService: SeatgeekService,
-    private concertService: ConcertService
+    private concertService: ConcertService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -56,6 +57,7 @@ export class SearchSeatGeekComponent implements OnInit {
   saveConcert(concert: Concert) {
     this.concertService.create(concert).subscribe({
       next: (concerts) => {
+        this.router.navigateByUrl('/concerts')
       },
     });
   }

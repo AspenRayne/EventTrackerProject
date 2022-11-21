@@ -1,72 +1,94 @@
-<div *ngFor="let concert of concerts">
-  <h2>
-    {{ concert.title }}
-    <button class="btn btn-danger btm-sm" (click)="deleteConcert(concert.id)">
-      Unsave Concert
-    </button>
-  </h2>
+<div *ngFor="let concert of concerts" class="text-center">
+  <div id="filterConcerts">
+    <h2>
+      {{ concert.title }}
 
-  <div class="d-flex">
-    <ul ngbNav #nav="ngbNav" class="nav-pills" orientation="vertical">
-      <li ngbNavItem="top">
-        <a ngbNavLink>Details</a>
-        <ng-template ngbNavContent>
-          <p>
-            <strong>{{ concert.title }}</strong> <br />
-            When: {{ concert.concertDate | date: "MM-dd-yyyy h:mm a" }} <br />
-            Venue: {{ concert.venue.name }} <br />
-            {{
-              concert.venue.city +
-                ", " +
-                concert.venue.state +
-                " " +
-                concert.venue.country +
-                " " +
-                concert.venue.postalCode
-            }}
-          </p>
-        </ng-template>
-      </li>
-      <li ngbNavItem="middle">
-        <a ngbNavLink>Performers</a>
-        <ng-template ngbNavContent>
-          <p *ngFor="let performer of concert.performers">
-            {{ performer.name }}
-          </p>
-        </ng-template>
-      </li>
-      <li ngbNavItem="bottom">
-        <a ngbNavLink>Comment</a>
-        <ng-template ngbNavContent>
-          <p>
-            {{ concert.review }}
-          </p>
-          <div *ngIf="concert.review == null">
-            <form>
+    </h2>
+    <hr>
+
+    <div class="d-flex">
+      <ul ngbNav #nav="ngbNav" class="nav-pills" orientation="vertical">
+        <li ngbNavItem="top" >
+          <a ngbNavLink>Details</a>
+          <ng-template ngbNavContent>
+            <p>
+              <strong>{{ concert.title }}</strong> <br />
+              When: {{ concert.concertDate | date: "MM-dd-yyyy h:mm a" }} <br />
+              Venue: {{ concert.venue.name }} <br />
+              {{
+                concert.venue.city +
+                  ", " +
+                  concert.venue.state +
+                  " " +
+                  concert.venue.country +
+                  " " +
+                  concert.venue.postalCode
+              }}
+            </p>
+          </ng-template>
+        </li>
+        <li ngbNavItem="middle">
+          <a ngbNavLink>Performers</a>
+          <ng-template ngbNavContent>
+            <div *ngFor="let performer of concert.performers">
+              {{ performer.name }}
+            </div>
+              <div
+            *ngFor="
+              let performer of concert.performers;
+              let i = index;
+              let first = first
+            "
+          >
+            <div *ngIf="first">
+              <img src="{{ performer.imageUrl }}" />
+              </div>
+              </div>
+          </ng-template>
+        </li>
+        <li ngbNavItem="bottom">
+          <a ngbNavLink>Comment</a>
+          <ng-template ngbNavContent>
+            <p>
+              {{ concert.review }}
+            </p>
+            <div *ngIf="concert.review == null">
+              <form>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="review"
+                  placeholder="Comment"
+                  [(ngModel)]="concert.review"
+                />
+                <button class="btn btn-light" (click)="addComment(concert)">Add Comment</button>
+              </form>
+            </div>
+            <p *ngIf="concert.review !== null">
               <input
                 class="form-control"
                 type="text"
                 name="review"
-                placeholder="Comment"
+                value="{{ concert.review }}"
                 [(ngModel)]="concert.review"
               />
-              <button (click)="addComment(concert)">Add Comment</button>
-            </form>
-          </div>
-          <p *ngIf="concert.review !== null">
-            <input
-              class="form-control"
-              type="text"
-              name="review"
-              value="{{ concert.review }}"
-              [(ngModel)]="concert.review"
-            />
-            <button (click)="addComment(concert)">Edit Comment</button>
-          </p>
-        </ng-template>
-      </li>
-    </ul>
+              <button class="btn btn-light" (click)="addComment(concert)">Edit Comment</button>
+            </p>
+          </ng-template>
+        </li>
+        <li ngbNavItem="bottom-1">
+          <a ngbNavLink><button class="btn btn-danger btm-sm" (click)="deleteConcert(concert.id)">
+            Unsave Concert
+          </button></a>
+          <ng-template ngbNavContent>
+          </ng-template>
+        </li>
+      </ul>
 
-    <div [ngbNavOutlet]="nav" class="ms-4"></div>
+      <div [ngbNavOutlet]="nav" class="ms-4"></div>
+    </div>
   </div>
 </div>
+
+
+
