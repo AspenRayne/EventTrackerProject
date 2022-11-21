@@ -1,0 +1,40 @@
+#bannerimage {
+  background-image: url(https://www.oyorooms.com/blog/wp-content/uploads/2018/02/event.jpg);
+  height: fit-content;
+  width: fit-content;
+  padding: 100px 100px;
+  background-repeat: repeat-x;
+  background-position: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20%;
+  box-shadow: 0 0 20px 20px white;
+  margin-top: 40px;
+}
+
+h1 {
+  font-size: 500%;
+	text-transform: uppercase;
+	text-shadow: 1px 1px 15px #000;
+}
+
+#searchForm {
+  display: block;
+  text-align: center;
+  width: 700px;
+  margin: 0px auto;
+  padding: 20px;
+  color: white;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  opacity: 0.93;
+}
+
+#concertsList {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1500px;
+}
+

@@ -27,11 +27,37 @@ export class ConcertService {
   }
 
   create(concert: Concert): Observable<Concert> {
-    return this.http.post<Concert>(`${this.url}/${concert.seatGeekId}`, null).pipe(
+    return this.http
+      .post<Concert>(`${this.url}/${concert.seatGeekId}`, null)
+      .pipe(
+        catchError((err: any) => {
+          console.error(err);
+          return throwError(
+            () => new Error('Concert.create(): error creating Concert: ' + err)
+          );
+        })
+      );
+  }
+
+  addComment(concert: Concert): Observable<Concert> {
+    return this.http
+      .put<Concert>(`${this.url}/${concert.id}`, concert)
+      .pipe(
+        catchError((err: any) => {
+          console.error(err);
+          return throwError(
+            () => new Error('Concert.addComment(): error adding Comment: ' + err)
+          );
+        })
+      );
+  }
+
+  destroy(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${id}`).pipe(
       catchError((err: any) => {
         console.error(err);
         return throwError(
-          () => new Error('Todo.create(): error creating Todo: ' + err)
+          () => new Error('Todo.destroy(): error deleting Todo: ' + err)
         );
       })
     );

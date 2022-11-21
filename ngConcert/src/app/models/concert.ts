@@ -1,3 +1,6 @@
+import { Performer } from "./performer";
+import { Venue } from "./venue";
+
 export class Concert {
   id: number;
   title: string;
@@ -5,6 +8,8 @@ export class Concert {
   concertDate: string;
   seatGeekId: number;
   review: string;
+  performers: Performer [];
+  venue: Venue;
 
   constructor(
     id: number = 0,
@@ -12,7 +17,9 @@ export class Concert {
     ticketUrl: string = '',
     concertDate: string = '',
     seatGeekId: number = 0,
-    review: string = ''
+    review: string = '',
+    performers: [] = [],
+    venue: Venue
   ) {
     this.id = id;
     this.title = title;
@@ -20,5 +27,7 @@ export class Concert {
     this.concertDate = concertDate;
     this.seatGeekId = seatGeekId;
     this.review = review;
+    this.performers = performers;
+    this.venue = venue;
   }
 }

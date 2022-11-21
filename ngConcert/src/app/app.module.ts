@@ -9,13 +9,15 @@ import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchSeatGeekComponent } from './components/search-seat-geek/search-seat-geek.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { SavedConcertsComponent } from './components/saved-concerts/saved-concerts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SearchSeatGeekComponent,
-    NavigationComponent
+    NavigationComponent,
+    SavedConcertsComponent
   ],
   imports: [
     BrowserModule,

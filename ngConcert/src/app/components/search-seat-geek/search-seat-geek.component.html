@@ -1,61 +1,85 @@
-<form>
-  <input
-    class="form-control"
-    type="text"
-    name="city"
-    placeholder="City"
-    [(ngModel)]="searchParams['city']"
-  />
-  <input
-    class="form-control"
-    type="text"
-    name="state"
-    placeholder="State"
-    [(ngModel)]="searchParams['state']"
-  />
-  <input
-    class="form-control"
-    type="text"
-    name="performer"
-    placeholder="Performer"
-    [(ngModel)]="searchParams['performer']"
-  />
-  <button (click)="searchSG()">Search</button>
-</form>
-
-<div *ngIf="sgList">
-  <div *ngFor="let concert of sgList">
-    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-      <ngb-panel title="{{ concert.title }}">
-        <ng-template ngbPanelContent>
-          <div class="card mb-3">
-            <img
-              src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-              class="card-img-top"
-            />
-            <div class="card-body">
-              <h5 class="card-title">{{ concert.title }}</h5>
-              <p class="card-text">
-                {{ concert.concertDate | date: "MM-dd-yyyy h:mm a" }}
-              </p>
-              <p class="card-text">
-                <small class="text-muted"
-                  ><small
-                    ><a href="{{ concert.ticketUrl }}">Tickets</a></small
-                  ></small
-                >
-              </p>
-              <div *ngIf="!savedButton">
-                <button (click)="saveConcert(concert)">Save Concert</button>
-              </div>
-              <div *ngIf="savedButton">
-                <button >Concert Saved</button>
-                <button>View Saved Concerts</button>
-              </div>
+<div id="bannerimage" name="bannerimage">
+  <h1>Search By Any Combination</h1>
+  <div id="searchForm">
+    <form>
+      <input
+        class="form-control"
+        type="text"
+        name="city"
+        placeholder="City"
+        [(ngModel)]="searchParams['city']"
+      />
+      <input
+        class="form-control"
+        type="text"
+        name="state"
+        placeholder="State"
+        [(ngModel)]="searchParams['state']"
+      />
+      <input
+        class="form-control"
+        type="text"
+        name="performer"
+        placeholder="Performer"
+        [(ngModel)]="searchParams['performer']"
+      />
+      <hr />
+      <button class="btn btn-light" (click)="searchSG()">Search</button>
+    </form>
+  </div>
+</div>
+<hr />
+<div *ngIf="sgList" id="concertsList">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div *ngFor="let concert of sgList">
+      <div class="col">
+        <div class="card h-100">
+          <div
+            *ngFor="
+              let performer of concert.performers;
+              let i = index;
+              let first = first
+            "
+          >
+            <div *ngIf="first">
+              <img src="{{ performer.imageUrl }}" class="card-img-top" />
             </div>
           </div>
-        </ng-template>
-      </ngb-panel>
-    </ngb-accordion>
+          <div class="card-body">
+            <h5 class="card-title">{{ concert.title }}</h5>
+            <p class="card-text">
+              {{ concert.concertDate | date: "MM-dd-yyyy h:mm a" }}
+            </p>
+            <h5>Venue: {{ concert.venue.name }}</h5>
+            <p class="card-text">
+              {{
+                concert.venue.city +
+                  ", " +
+                  concert.venue.state +
+                  " " +
+                  concert.venue.country +
+                  " " +
+                  concert.venue.postalCode
+              }}
+            </p>
+            <h5>Performers</h5>
+            <div *ngFor="let performer of concert.performers">
+              <p class="card-text">
+                {{ performer.name }}
+              </p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted"
+                ><a href="{{ concert.ticketUrl }}">Tickets</a></small
+              >
+              |
+              <button (click)="saveConcert(concert)" class="btn btn-primary">
+                Save Concert
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Concert } from 'src/app/models/concert';
+import { Performer } from 'src/app/models/performer';
 import { ConcertService } from 'src/app/services/concert.service';
+import { PerformerService } from 'src/app/services/performer.service';
 import { SeatgeekService } from 'src/app/services/seatgeek.service';
 
 @Component({
@@ -13,11 +15,7 @@ export class SearchSeatGeekComponent implements OnInit {
 
   savedButton = false;
 
-  searchParams: { [key: string]: any } = {
-    city: '',
-    state: '',
-    performer: '',
-  };
+  searchParams: { [key: string]: any } = this.resetForm();
 
   constructor(
     private sgService: SeatgeekService,
@@ -36,7 +34,6 @@ export class SearchSeatGeekComponent implements OnInit {
         });
       }
     }
-    console.log(requestBody);
     this.sgService.index(requestBody).subscribe({
       next: (concerts) => {
         concerts.forEach((element) => {
@@ -44,13 +41,22 @@ export class SearchSeatGeekComponent implements OnInit {
         });
       },
     });
+    this.sgList = [];
+    this.searchParams = this.resetForm();
   }
 
-  saveConcert(concert: Concert){
+  resetForm(): { [key: string]: any } {
+    return {
+      city: '',
+      state: '',
+      performer: '',
+    };
+  }
+
+  saveConcert(concert: Concert) {
     this.concertService.create(concert).subscribe({
       next: (concerts) => {
-        this.savedButton = true;
-      }
-    })
+      },
+    });
   }
 }

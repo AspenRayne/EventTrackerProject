@@ -9,7 +9,7 @@ import { SeatgeekService } from 'src/app/services/seatgeek.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  concerts: Concert[] = [];
+
 
 
 
@@ -19,21 +19,10 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadConcerts();
+
   }
 
-  loadConcerts() {
-    this.concertService.index().subscribe({
-      next: (concerts) => {
-        console.log(concerts);
-        this.concerts = concerts;
-      },
-      error: (fail) => {
-        console.error('HomeComponent.loadConcerts: error getting concerts');
-        console.error(fail);
-      },
-    });
-  }
+
 
 
 
