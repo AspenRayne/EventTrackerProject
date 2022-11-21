@@ -49,9 +49,6 @@
         <li ngbNavItem="bottom">
           <a ngbNavLink>Comment</a>
           <ng-template ngbNavContent>
-            <p>
-              {{ concert.review }}
-            </p>
             <div *ngIf="concert.review == null">
               <form>
                 <input
@@ -61,10 +58,11 @@
                   placeholder="Comment"
                   [(ngModel)]="concert.review"
                 />
-                <button class="btn btn-light" (click)="addComment(concert)">Add Comment</button>
+                <hr>
+                <button class="btn btn-dark" (click)="addComment(concert)">Add Comment</button>
               </form>
             </div>
-            <p *ngIf="concert.review !== null">
+            <div *ngIf="concert.review !== null">
               <input
                 class="form-control"
                 type="text"
@@ -72,8 +70,9 @@
                 value="{{ concert.review }}"
                 [(ngModel)]="concert.review"
               />
-              <button class="btn btn-light" (click)="addComment(concert)">Edit Comment</button>
-            </p>
+              <hr>
+              <button class="btn btn-dark" (click)="addComment(concert)">Edit Comment</button>
+            </div>
           </ng-template>
         </li>
         <li ngbNavItem="bottom-1">
