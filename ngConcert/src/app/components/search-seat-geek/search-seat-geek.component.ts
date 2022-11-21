@@ -46,7 +46,7 @@ export class SearchSeatGeekComponent implements OnInit {
           'SearchSeatGeekComponent.searchSG: error searching concert'
         );
         console.error(fail);
-      }
+      },
     });
     this.sgList = [];
     this.searchParams = this.resetForm();
@@ -63,14 +63,14 @@ export class SearchSeatGeekComponent implements OnInit {
   saveConcert(concert: Concert) {
     this.concertService.create(concert).subscribe({
       next: (concerts) => {
-        this.router.navigateByUrl('/concerts')
+        this.router.navigateByUrl('/concerts');
       },
       error: (fail) => {
         console.error(
           'SearchSeatGeekComponent.saveConcert: error saving concert'
         );
         console.error(fail);
-      }
+      },
     });
   }
 }
